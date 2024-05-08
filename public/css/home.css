@@ -1,0 +1,15 @@
+.page-header {
+    display: none;
+}
+.page-body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 80vh;
+}
+.container-xl {
+    padding: 0;
+}
+.carousel-item img {
+    height: 80vh;
+}
