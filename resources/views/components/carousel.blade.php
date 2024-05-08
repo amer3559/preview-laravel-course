@@ -1,10 +1,3 @@
-@extends('layouts.master')
-@section('pageTitle', isset($pageTile)? $pageTile: 'home')
-@section('stylesheets')
-    <link href="{{asset('css/home.css')}}" rel="stylesheet"/>
-@endsection
-@section('content')
-{{--  Carousel  --}}
 <div id="carousel-sample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carousel-sample" data-bs-slide-to="0" class="active"></button>
@@ -32,4 +25,3 @@
         <span class="visually-hidden">Next</span>
     </a>
 </div>
-@endsection
