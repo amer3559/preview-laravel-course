@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\OperationController;
-use App\Http\Controllers\TicketController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,64 +21,81 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Header
-//Route::get('/tickets', function () {
-//    return view('pages.tickets.index');
-//})->name("tickets");
 
-//Route::get('/operation-tickets', function () {
-//    return view('pages.operations.index');
-//})->name("operation.tickets");
+// blog
+Route::group([ 'prefix' => 'blog'], function () {
+    Route::get('/', [PostController::class, 'getIndex'])->name('blog.index');
 
-//Route::get('/ticket-cases', function () {
-//    return view('pages.ticketCases.index');
-//})->name("ticketCases");
+    Route::get('post/{id}', function ($id) {
+        if ($id == 1) {
+            $post = [
+                'title' => 'Learning Laravel',
+                'content' => 'This blog post will get you right on track with Laravel!'
+            ];
+        } else {
+            $post = [
+                'title' => 'Something else',
+                'content' => 'Some other content'
+            ];
+        }
+        return view('blog.post', ['post' => $post]);
+    })->name('blog.post');
 
-// Users
-Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
+    Route::get('about', function () {
+        return view('other.about');
+    })->name('other.about');
 
-    Route::get('/', [UserController::class, 'index'])->name("index");
+    Route::group(['prefix' => 'admin'], function() {
+        Route::get('', function () {
+            return view('admin.index');
+        })->name('admin.index');
 
-    Route::get('/create', [UserController::class, 'create'])->name("create");
+        Route::get('create', function () {
+            return view('admin.create');
+        })->name('admin.create');
 
-    Route::get('/show/{id?}', [UserController::class, 'show'])->name('show');
+        Route::post('create', function(\Illuminate\Http\Request $request, \Illuminate\Validation\Factory $validator) {
+            $validation = $validator->make($request->all(), [
+                'title' => 'required|min:5',
+                'content' => 'required|min:10'
+            ]);
+            if ($validation->fails()) {
+                return redirect()->back()->withErrors($validation);
+            }
+            return redirect()
+                ->route('admin.index')
+                ->with('info', 'Post created, Title: ' . $request->input('title'));
+        })->name('admin.create');
 
-    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
+        Route::get('edit/{id}', function ($id) {
+            if ($id == 1) {
+                $post = [
+                    'title' => 'Learning Laravel',
+                    'content' => 'This blog post will get you right on track with Laravel!'
+                ];
+            } else {
+                $post = [
+                    'title' => 'Something else',
+                    'content' => 'Some other content'
+                ];
+            }
+            return view('admin.edit', ['post' => $post]);
+        })->name('admin.edit');
 
-    Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::post('edit', function(\Illuminate\Http\Request $request, \Illuminate\Validation\Factory $validator) {
+            $validation = $validator->make($request->all(), [
+                'title' => 'required|min:5',
+                'content' => 'required|min:10'
+            ]);
+            if ($validation->fails()) {
+                return redirect()->back()->withErrors($validation);
+            }
+            return redirect()
+                ->route('admin.index')
+                ->with('info', 'Post edited, new Title: ' . $request->input('title'));
+        })->name('admin.update');
+    });
 
-    Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
-
-    Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
 });
 
-// tickets
-Route::group(['as' => 'tickets.', 'prefix' => 'tickets'], function () {
 
-    Route::get('/', [TicketController::class, 'index'])->name("index");
-
-    Route::get('/create', [TicketController::class, 'create'])->name("create");
-
-    Route::get('/edit/{id}', [TicketController::class, 'edit'])->name('edit');
-
-    Route::post('/store', [TicketController::class, 'store'])->name('store');
-
-    Route::post('/update/{id}', [TicketController::class, 'update'])->name('update');
-
-    Route::delete('/destroy/{id}', [TicketController::class, 'destroy'])->name('destroy');
-});
-// operations
-Route::group(['as' => 'operations.', 'prefix' => 'operations'], function () {
-
-    Route::get('/', [OperationController::class, 'getRunningTickets'])
-        ->name("getRunningTickets");
-
-    Route::post('/finish/{id}', [OperationController::class, 'finishRunningTicket'])->name('finish');
-
-    Route::get('/finished', [OperationController::class, 'getFinishedTickets'])
-        ->name("getFinishedTickets");
-
-    Route::post('/import-table', [OperationController::class, 'importTable'])->name('importTable');
-
-    Route::get('/export-table', [OperationController::class, 'exportTable'])->name('exportTable');
-});
