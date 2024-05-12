@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 
-@section('pageTitle', isset($pageTile)? $pageTile: 'new ')
+@section('pageTitle', isset($pageTile)? $pageTile: 'admin.create ')
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <form action="{{ route('admin.create') }}" method="post">
+                @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" id="title" name="title">

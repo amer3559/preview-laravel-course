@@ -25,20 +25,6 @@
         </div>
         <div class="col-auto ms-auto">
             <div class="btn-list">
-            <span class="d-none d-sm-inline">
-                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-filter-search"
-                         width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none"
-                         stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path
-                            d="M11.36 20.213l-2.36 .787v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414">
-                        </path>
-                        <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-                        <path d="M20.2 20.2l1.8 1.8"></path>
-                    </svg>
-                </button>
-            </span>
                 <a href="{{route('admin.create')}}" class="btn btn-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24"
                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -56,12 +42,20 @@
 @endsection
 
 @section('content')
-    <hr>
-    <div class="row">
-        <div class="col-md-12">
-            <p><strong>Learning Laravel</strong>
-                <a href="{{ route('admin.edit', ['id' => 1]) }}">Edit</a>
-            </p>
+    @if(Session::has('info'))
+        <div class="row">
+            <div class="col-md-12">
+                <p class="alert alert-info">{{ Session::get('info') }}</p>
+            </div>
         </div>
-    </div>
+    @endif
+
+    <hr>
+    @foreach($posts as $post)
+        <div class="row">
+            <div class="col-md-12">
+                <p><strong>{{ $post['title'] }}</strong> <a href="{{ route('admin.edit', array_search($post, $posts)) }}">Edit</a></p>
+            </div>
+        </div>
+    @endforeach
 @endsection

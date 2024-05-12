@@ -20,7 +20,7 @@
 <script src="{{asset('dist/js/demo-theme.min.js?1684106062')}}"></script>
 <div class="page">
     <!-- Navbar -->
-    @include('partials.header')
+    @include('partials.admin-header')
     <div class="page-wrapper">
         <!-- Page header -->
         <div class="page-header d-print-none">

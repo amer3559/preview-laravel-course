@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('pageTitle', isset($pageTile)? $pageTile: 'blog.index')
+@section('pageTitle', isset($pageTile)? $pageTile: 'blog.post')
 
 @section('pageHeader')
     <div class="row align-items-center">
@@ -21,22 +21,23 @@
                     <path d="M6.337 17.657a8 8 0 0 1 0 -11.314" />
                 </svg>
             </span>
-                new posts
+                post page
             </h2>
         </div>
 
     </div>
 @endsection
 
+
 @section('content')
-    @foreach($posts as $post)
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1 class="post-title">{{ $post['title'] }}</h1>
-                <p>{{ $post['content'] }}!</p>
-                <p><a href="{{ route('blog.post', array_search($post, $posts)) }}">Read more...</a></p>
-            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="quote">{{ $post['title'] }}</p>
         </div>
-        <hr>
-    @endforeach
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>{{ $post['content'] }}</p>
+        </div>
+    </div>
 @endsection
