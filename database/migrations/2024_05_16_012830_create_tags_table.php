@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_cases', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ticket_id');
-            $table->enum('case', ['waiting', 'in_operation', 'done']);
-            // Add any other columns you need for the ticket_cases table
             $table->timestamps();
-
-            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
+            $table->string('name');
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticket_cases');
+        Schema::dropIfExists('tags');
     }
 };

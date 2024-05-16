@@ -24,7 +24,6 @@
                 new posts
             </h2>
         </div>
-
     </div>
 @endsection
 
@@ -45,7 +44,7 @@
                 <th>{{ $post['title'] }}</th>
                 <th>{{ $post['content'] }}</th>
                 <td>
-                    <a href="{{route('blog.post', array_search($post, $posts))}}" title="read more..."
+                    <a href="{{route('blog.post', $post->id )}}" title="read more..."
                        class="btn btn-info  btn-icon" aria-label="Button">
                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
                     </a>
@@ -54,4 +53,10 @@
         @endforeach
         </tbody>
     </table>
+    <hr>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            {{ $posts->links() }}
+        </div>
+    </div>
 @endsection
