@@ -2,7 +2,6 @@
 @section('pageTitle', isset($pageTile)? $pageTile: 'update post')
 
 @section('pageHeader')
-
     <div class="row align-items-center">
         <div class="col">
             <div class="page-pretitle">
@@ -16,7 +15,7 @@
                     <path d="M15 17l0 2"></path>
                     <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2"></path>
                 </svg>
-              {{$post['title']}}
+              {{$post->title}}
             </h2>
         </div>
 
@@ -35,7 +34,7 @@
                         class="form-control"
                         id="title"
                         name="title"
-                        value="{{ $post['title'] }}">
+                        value="{{ $post->title }}">
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
@@ -44,18 +43,7 @@
                         class="form-control"
                         id="content"
                         name="content"
-                        value="{{ $post['content'] }}">
-                </div>
-                <div class="form-group">
-                    @foreach($tags as $tag)
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="tags[]"
-                                       value="{{ $tag->id }}"
-                                    {{ $post->tags->contains($tag->id) ? 'checked' : '' }}> {{ $tag->name }}
-                            </label>
-                        </div>
-                    @endforeach
+                        value="{{ $post->content }}">
                 </div>
                 @csrf
                 <input type="hidden" name="id" value="{{ $postId }}">

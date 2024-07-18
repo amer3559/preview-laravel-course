@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_tag', function (Blueprint $table) {
+        Schema::create('operations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('ticket_id');
+            $table->boolean('is_running')->default(true);
+            $table->integer('time_diff')->nullable()->default(0);
+            // Add any other columns you need for the operations table
             $table->timestamps();
-            $table->integer('post_id');
-            $table->integer('tag_id');
+
+            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('operations');
     }
 };

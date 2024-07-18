@@ -24,39 +24,77 @@
                 new posts
             </h2>
         </div>
+
     </div>
 @endsection
 
 @section('content')
-    <table class="table table-responsive table-center">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th class="text-nowrap">Title</th>
-            <th class="text-nowrap">Content</th>
-            <th class="text-nowrap">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
+
+            <div class="row">
         @foreach ($posts as $index => $post)
-            <tr>
-                <th>{{++$index}}</th>
-                <th>{{ $post['title'] }}</th>
-                <th>{{ $post['content'] }}</th>
-                <td>
-                    <a href="{{route('blog.post', $post->id )}}" title="read more..."
-                       class="btn btn-info  btn-icon" aria-label="Button">
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
-                    </a>
-                </td>
-            </tr>
+                <div class="card mb-3 col-12 d-flex flex-column">
+                    <div class="card-body d-flex flex-column">
+                        <div class="row">
+                            <div class="col-11">
+                                <div class="row">
+                                    <div class="datagrid-title">
+                                        <h3 class="card-title  align-center col-12">{{ $post->title }}</h3>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="datagrid">
+                                        <div class="datagrid-item">
+                                            <div class="datagrid-title">content</div>
+                                            <div class="datagrid-content">{{ $post->content }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="row">
+                                    <div class="datagrid">
+                                        <div class="datagrid-item">
+                                            <div class="datagrid-content">
+                                                <div class="d-flex align-items-center">
+                                <span class="avatar avatar-xs me-2 rounded">
+                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-tag"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592 -5.592a2.41 2.41 0 0 0 0 -3.408l-7.71 -7.71a2 2 0 0 0 -1.414 -.586h-5.172a3 3 0 0 0 -3 3z" /></svg>
+                                </span>
+                                                    tage1
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="datagrid-item">
+                                            <div class="datagrid-content">
+                                                <div class="d-flex  align-items-center">
+                                <span class="">
+                                   <a href="#" title="like"
+                                      class="btn-icon" aria-label="Button">
+                                                        <svg class="icon-pulse" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-thumb-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3" /></svg>
+                                                    </a>
+                                </span>
+                                                    <span class="badge bg-blue">5</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <div class="datagrid-content">
+                                                <div class="d-flex align-items-center">
+                                <span class="avatar avatar-xs me-2 rounded">
+                                    @include('components.more-icon')
+                                </span>
+                                                    more...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
         @endforeach
-        </tbody>
-    </table>
-    <hr>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            {{ $posts->links() }}
-        </div>
-    </div>
+            </div>
+
 @endsection

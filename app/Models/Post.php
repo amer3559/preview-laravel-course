@@ -2,27 +2,36 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['title', 'content'];
-//    Relations
-    public function likes()
-    {
-        return $this->hasMany('App\Models\Like', 'post_id');
-    }
 
-    public function tags()
-    {
-        return $this->belongsToMany('App\Models\Tag', 'post_tag', 'post_id', 'tag_id')->withTimestamps();
+    public function getPosts(){
+        return Post::get();
     }
-//    Accessors & Mutators
-    public function setTitleAttribute($value) {
-        $this->attributes['title'] = strtolower($value);
+    public function getPost($id){
+        return Post::findOrFail($id);
     }
+    public function addPost($data){
+        $post = new Post();
+        $post->title = $data->title;
+        $post->content = $data->content;
+       $post->save();
+    }
+    public function editPost($id, $data){
+        return Post::where('id',$id)->update(
+            [
+                'title' => $data->title,
+                'content' => $data->content,
+            ]
+        );
+    }
+    public function createDummyData(){}
 
-    public function getTitleAttribute($value) {
-        return strtoupper($value);
-    }
+
 }

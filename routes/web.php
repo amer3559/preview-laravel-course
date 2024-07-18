@@ -27,8 +27,6 @@ Route::group([ 'prefix' => 'blog'], function () {
 
     Route::get('post/{id}', [PostController::class, 'getPost'])->name('blog.post');
 
-    Route::get('post-like/{id}', [PostController::class, 'getLikePost'])->name('blog.post.like');
-
     Route::get('about', function () {
         return view('other.about');
     })->name('other.about');
@@ -44,7 +42,10 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('edit/{id}', [PostController::class, 'getAdminEdit'])->name('admin.edit');
 
-    Route::get('delete/{id}', [PostController::class, 'getAdminDelete'])->name('admin.delete');
-
     Route::post('edit', [PostController::class, 'postAdminUpdate'])->name('admin.update');
 });
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
