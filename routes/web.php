@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\OperationController;
-use App\Http\Controllers\TicketController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,69 +16,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+//welcome
 Route::get('/', function () {
-    return view('pages.home');
+    return view('welcome');
 });
 
-//Header
-//Route::get('/tickets', function () {
-//    return view('pages.tickets.index');
-//})->name("tickets");
+// blog
+Route::group([ 'prefix' => 'blog'], function () {
+    Route::get('/', [PostController::class, 'getIndex'])->name('blog.index');
 
-//Route::get('/operation-tickets', function () {
-//    return view('pages.operations.index');
-//})->name("operation.tickets");
+    Route::get('post/{id}', [PostController::class, 'getPost'])->name('blog.post');
 
-//Route::get('/ticket-cases', function () {
-//    return view('pages.ticketCases.index');
-//})->name("ticketCases");
+    Route::get('post-like/{id}', [PostController::class, 'addLikePost'])->name('blog.post.like');
 
-// Users
-Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
-
-    Route::get('/', [UserController::class, 'index'])->name("index");
-
-    Route::get('/create', [UserController::class, 'create'])->name("create");
-
-    Route::get('/show/{id?}', [UserController::class, 'show'])->name('show');
-
-    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
-
-    Route::post('/store', [UserController::class, 'store'])->name('store');
-
-    Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
-
-    Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
+    Route::get('about', function () {
+        return view('other.about');
+    })->name('other.about');
 });
 
-// tickets
-Route::group(['as' => 'tickets.', 'prefix' => 'tickets'], function () {
+//admin
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('', [PostController::class, 'getAdminIndex'])->name('admin.index');
 
-    Route::get('/', [TicketController::class, 'index'])->name("index");
+    Route::get('create', [PostController::class, 'getAdminCreate'])->name('admin.create');
 
-    Route::get('/create', [TicketController::class, 'create'])->name("create");
+    Route::post('create', [PostController::class, 'postAdminCreate'])->name('admin.create');
 
-    Route::get('/edit/{id}', [TicketController::class, 'edit'])->name('edit');
+    Route::get('edit/{id}', [PostController::class, 'getAdminEdit'])->name('admin.edit');
 
-    Route::post('/store', [TicketController::class, 'store'])->name('store');
 
-    Route::post('/update/{id}', [TicketController::class, 'update'])->name('update');
+    Route::post('edit', [PostController::class, 'postAdminUpdate'])->name('admin.update');
 
-    Route::delete('/destroy/{id}', [TicketController::class, 'destroy'])->name('destroy');
+    Route::get('delete/{id}', [PostController::class, 'getAdminDelete'])->name('admin.delete');
 });
-// operations
-Route::group(['as' => 'operations.', 'prefix' => 'operations'], function () {
 
-    Route::get('/', [OperationController::class, 'getRunningTickets'])
-        ->name("getRunningTickets");
 
-    Route::post('/finish/{id}', [OperationController::class, 'finishRunningTicket'])->name('finish');
+Auth::routes();
 
-    Route::get('/finished', [OperationController::class, 'getFinishedTickets'])
-        ->name("getFinishedTickets");
-
-    Route::post('/import-table', [OperationController::class, 'importTable'])->name('importTable');
-
-    Route::get('/export-table', [OperationController::class, 'exportTable'])->name('exportTable');
-});
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
