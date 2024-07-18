@@ -55,7 +55,7 @@
             <th>#</th>
             <th class="text-nowrap">Title</th>
             <th class="text-nowrap">Content</th>
-            <th class="text-nowrap">Actions</th>
+            <th colspan="2" class="text-nowrap">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -65,9 +65,15 @@
                 <th>{{ $post->title }}</th>
                 <th>{{ $post->content }}</th>
                 <td>
-                    <a href="{{ route('admin.edit', $post->id) }}" title="edit"
-                       class="btn btn-info  btn-icon" aria-label="Button">
+                    <a href="{{ route('admin.edit', $post->id) }}" title="edit" class="btn btn-info  btn-icon"
+                       aria-label="Button">
                         @include('components.edit-icon')
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('admin.delete', $post->id) }}" title="edit" class="btn btn-danger  btn-icon"
+                       aria-label="Button">
+                        Delete
                     </a>
                 </td>
             </tr>

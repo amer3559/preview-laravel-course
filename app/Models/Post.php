@@ -11,27 +11,13 @@ class Post extends Model
 
     protected $fillable = ['title', 'content'];
 
-    public function getPosts(){
-        return Post::get();
+    public function likes(){
+        return $this->hasMany(Like::class, 'post_id');
     }
-    public function getPost($id){
-        return Post::findOrFail($id);
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id');
     }
-    public function addPost($data){
-        $post = new Post();
-        $post->title = $data->title;
-        $post->content = $data->content;
-       $post->save();
-    }
-    public function editPost($id, $data){
-        return Post::where('id',$id)->update(
-            [
-                'title' => $data->title,
-                'content' => $data->content,
-            ]
-        );
-    }
-    public function createDummyData(){}
 
 
 }

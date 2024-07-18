@@ -27,6 +27,8 @@ Route::group([ 'prefix' => 'blog'], function () {
 
     Route::get('post/{id}', [PostController::class, 'getPost'])->name('blog.post');
 
+    Route::get('post-like/{id}', [PostController::class, 'addLikePost'])->name('blog.post.like');
+
     Route::get('about', function () {
         return view('other.about');
     })->name('other.about');
@@ -42,7 +44,10 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('edit/{id}', [PostController::class, 'getAdminEdit'])->name('admin.edit');
 
+
     Route::post('edit', [PostController::class, 'postAdminUpdate'])->name('admin.update');
+
+    Route::get('delete/{id}', [PostController::class, 'getAdminDelete'])->name('admin.delete');
 });
 
 
