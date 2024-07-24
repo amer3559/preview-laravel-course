@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 
+use App\Http\Controllers\SigninController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,14 +29,27 @@ Route::group([ 'prefix' => 'blog'], function () {
     Route::get('post/{id}', [PostController::class, 'getPost'])->name('blog.post');
 
     Route::get('post-like/{id}', [PostController::class, 'addLikePost'])->name('blog.post.like');
-
-    Route::get('about', function () {
-        return view('other.about');
-    })->name('other.about');
 });
 
-//admin
-Route::group(['prefix' => 'admin'], function() {
+##Auth##
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => ['guest']], function(){
+    Route::get('login', function () {
+        return view('other.auth');
+    })->name('auth.login');
+
+    Route::get('register', function () {
+        return view('components.register');
+    })->name('register');
+});
+
+Route::post('login', [SigninController::class, 'signin'])->name('auth.signin');
+
+##Admin##
+Route::group(['prefix' => 'admin','middleware' => ['auth']], function() {
     Route::get('', [PostController::class, 'getAdminIndex'])->name('admin.index');
 
     Route::get('create', [PostController::class, 'getAdminCreate'])->name('admin.create');
@@ -50,7 +64,3 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('delete/{id}', [PostController::class, 'getAdminDelete'])->name('admin.delete');
 });
 
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
