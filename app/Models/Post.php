@@ -19,5 +19,19 @@ class Post extends Model
         return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id');
     }
 
+    public function user()
+    {
+//        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
+    }
+
+    public function setTitleAttribute($value) {
+        $this->attributes['title'] = strtolower($value);
+    }
+
+    public function getTitleAttribute($value) {
+        return strtoupper($value);
+    }
+
 
 }

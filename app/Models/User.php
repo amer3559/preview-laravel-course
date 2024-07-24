@@ -24,15 +24,9 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
-        'age_day',
-        'age_month',
-        'age_year',
-        'address',
-        'phone_number',
         'email',
         'password',
-        'gender',
-        'role',
+
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -55,24 +49,11 @@ class User extends Authenticatable
 //        'gender' => GenderEnum::class
     ];
 
-
-    public function visitorTickets()
+// Relations
+    public function posts()
     {
-        return $this->hasMany(Ticket::class,'patient_id', 'id');
+        return $this->hasMany(Post::class);
     }
-    public function doctorTickets()
-    {
-        return $this->hasMany(Ticket::class,'doctor_id', 'id');
-    }
-
-//    public function tickets()
-//    {
-//        return $this->hasMany(Ticket::class, 'patient_id', 'user_id');
-//    }
-//    public function operations()
-//    {
-//        return $this->hasMany(Operation::class, 'doctor_id', 'user_id');
-//    }
 
 
 
