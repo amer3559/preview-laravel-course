@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Traits\GeneralHelperTrait;
 use http\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class PostController extends Controller
 {
    use ApiResponseTrait;
+   use GeneralHelperTrait;
 
     public function index(){
         $posts = PostResource::collection(Post::get());

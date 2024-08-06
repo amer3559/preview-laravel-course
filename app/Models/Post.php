@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'photo'];
 
 //    public function likes(){
 //        return $this->hasMany(Like::class, 'post_id');
@@ -32,6 +32,10 @@ class Post extends Model
 //    public function getTitleAttribute($value) {
 //        return strtoupper($value);
 //    }
+
+    public function  getPhotoAttribute($val){
+        return ($val !== null) ? asset('images/posts/' . $val) : "";
+    }
 
 
 }

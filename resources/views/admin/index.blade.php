@@ -55,6 +55,7 @@
             <th>#</th>
             <th class="text-nowrap">Title</th>
             <th class="text-nowrap">Content</th>
+            <th class="text-nowrap">image</th>
             <th colspan="2" class="text-nowrap">Actions</th>
         </tr>
         </thead>
@@ -64,6 +65,13 @@
                 <th>{{++$index}}</th>
                 <th>{{ $post->title }}</th>
                 <th>{{ $post->content }}</th>
+                <td>
+                    @if($post->photo)
+                    <img style="width: 150px; height: 100px;" src="{{$post -> photo }}">
+                    @else
+                    <span >--</span>
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('admin.edit', $post->id) }}" title="edit" class="btn btn-info  btn-icon"
                        aria-label="Button">

@@ -5,8 +5,16 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ route('admin.create') }}" method="post">
+            <form action="{{ route('admin.create') }}" method="post" enctype="multipart/form-data">
                 @csrf
+                <div class="form-group">
+                    <label id="photo" class="file center-block">
+                        <input type="file" id="file" name="photo">
+                    </label>
+                    @error('photo')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" id="title" name="title">

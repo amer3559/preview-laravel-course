@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Traits\GeneralHelperTrait;
 use Illuminate\Http\Request;
 use Auth;
 use Gate;
 
 class PostController extends Controller
 {
+    use GeneralHelperTrait;
+
     public function getIndex()
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(2);
@@ -53,6 +56,8 @@ class PostController extends Controller
 
     public function postAdminCreate(Request $request)
     {
+
+
         $this->validate($request, [
             'title' => 'required|min:5',
             'content' => 'required|min:10'
@@ -61,12 +66,19 @@ class PostController extends Controller
         if (!$user) {
             return redirect()->back();
         }
+
         $post = new Post([
             "title" => $request->input('title'),
             "content" => $request->input('content'),
         ]);
-        $user->posts()->save($post);
-        $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
+
+        if ($request->photo) {
+            $fileName = $this->uploadImage('posts', $request->file('photo'));
+            $post->photo = $fileName;
+        }
+        $post->save();
+//        $user->posts()->save($post);
+//        $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
         return redirect()->route('admin.index')->with('info', 'Post created, Title is: ' . $request->input('title'));
     }
 
